@@ -13,6 +13,7 @@ const connectDB = async () => {
     }
     
     try {
+        oose.set('strictQuery', true);
         mongoose.connect(dbURI, { useNewUrlParser: true });
     }
     catch (error) {

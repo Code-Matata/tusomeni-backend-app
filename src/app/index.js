@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const connectDB = require('../config/dbConnection');
 const corsOptions = require('../config/corsOptions');
 const checkOrigins = require('../middleware/checkOrigins');
+const v1PastPaperRoutes = require('../v1/routes/pastPaperRoutes');
 
 // Connect to MongoDB
 connectDB();
@@ -20,11 +21,21 @@ app.use(cors(corsOptions));
 // middleware for json 
 app.use(express.json());
 
+app.get('/', (req, res) => {
+    res.json("Hello test")
+})
+
+// image upload url
+app.use('/public/images', express.static('public/images'));
+
+//Api access end points
+app.use('/api/v1/past_papers', v1PastPaperRoutes);
+
 let PORT;
 
 // Check environment
 if (process.env.NODE_ENV === 'development') {
-    PORT = process.env.PROD_DEV
+    PORT = process.env.DEV_PORT
 }
 
 if (process.env.NODE_ENV === 'production') {
