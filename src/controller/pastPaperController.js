@@ -34,7 +34,9 @@ const addPastPaper = async (req, res) => {
 
     const newPastPaper = new PastPaper({
         name: body?.name,
-        Images: imagesArray
+        Images: imagesArray,
+        year: body?.year,
+        category: body?.category
     });
 
     try {
