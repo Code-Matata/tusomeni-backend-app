@@ -1,24 +1,45 @@
 const path = require("path");
 const multer = require('multer');
-const { v4: uuid } = require('uuid');
 
+const cloudinary = require('cloudinary').v2;
+const fs = require('fs');
 
-var storage = multer.diskStorage({
-
-    destination: function (req, file, callback) {
-        callback(null, 'public/images');
-    },
-
-    filename: function (req, file, callback) {
-        const match = ["image/png", "image/jpeg", "image/jpg"];
-        if (match.indexOf(file.mimetype) === -1) {
-            var message = `${file.originalname} is invalid. Only accept png,jpeg & jpg.`;
-            return callback(message, null);
-        }
-        callback(null, file.fieldname + '-' + uuid() + path.extname(file.originalname));
-    }
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
 })
 
-var uploadImages = multer({ storage: storage })
 
-module.exports = uploadImages
+const uploadToCloudinary = async (filePath) => {
+    let mainFolderName = "tusomeniImages"
+    let filePathOnCloudinary = `${mainFolderName}/${path.basename(filePath)}`
+
+    return cloudinary.uploader.upload(filePath, {"public_id": filePathOnCloudinary})
+    .then(res => {
+        fs.unlinkSync(filePath) // remove file from local upload folder
+
+        return {
+            message: "Success",
+            url: res.url
+        }
+    }).catch(err => {
+        fs.unlinkSync(filePath);
+        throw new Error("Failed to upload images")
+    })
+
+}
+
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './uploads')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname)
+    }
+})
+const uploadImages = multer({ storage: storage })
+
+
+module.exports = {uploadImages, uploadToCloudinary}

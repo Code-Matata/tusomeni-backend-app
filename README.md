@@ -7,6 +7,7 @@ Express
 Dotenv
 Mongoose
 Cors
+Cloudinary - For image storage (You will need to create a cloudinary account)
 
 ## Devdependncies
 Nodemon
