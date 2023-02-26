@@ -1,5 +1,5 @@
+const { uploadToCloudinary } = require('../middleware/imageUpload');
 const PastPaper = require('../models/PastPaper');
-const fsPromises = require('fs').promises;
 
 const fetchAllPapers = async (req, res) => {
     try {
@@ -23,27 +23,30 @@ const fetchSinglePastPaper = async (req, res) => {
 const addPastPaper = async (req, res) => {
     const { body } = req;
 
-    let imagesArray = []
+    let imagesArray = [];
 
-    if (req.files) {
-        req.files.forEach(element => {
-            imagePath = element?.path
-            imagesArray?.push(imagePath)
-        })
+    for (let i = 0; i < req.files.length; i++) {
+      try {
+        const res = await uploadToCloudinary(req.files[i].path);
+        imagesArray.push(res.url);
+      } catch (e) {
+        throw new Error(e.message);
+      }
     }
 
     const newPastPaper = new PastPaper({
         name: body?.name,
-        Images: imagesArray
+        images: imagesArray,
+        year: body?.year,
+        category: body?.category
     });
 
     try {
         await newPastPaper.save();
-
         return res.status(201).json({ message: `${newPastPaper?.name} has been added successfully` })
     }
     catch (error) {
-        res.status(error?.status || 500).json({ message: error?.message || error });
+        res.status(500).json({ message: error?.message || error });
     }
 }
 

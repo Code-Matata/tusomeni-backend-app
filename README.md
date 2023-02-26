@@ -3,10 +3,11 @@
 `Node express` backend application for `Tusomeni web application`. It is build with `javascript`
 
 ## Dependencies
-Express
-Dotenv
-Mongoose
-Cors
+- Express
+
+- Mongoose - Data is stored in MongoDB Atlas
+
+- Cloudinary - For image storage (You will need to create a cloudinary account)
 
 ## Devdependncies
 Nodemon
