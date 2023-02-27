@@ -12,7 +12,7 @@ const getPastPaper = async (req, res, next) => {
     }
 
     try {
-        pastPaper = await PastPaper.findOne({name: pastPaperId});
+        pastPaper = await PastPaper.findOne({_id: pastPaperId});
         if (pastPaper === null) return res.status(404).json({ message: "This past paper is not available" })
     }
     catch (error) {

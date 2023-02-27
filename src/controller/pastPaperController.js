@@ -26,12 +26,12 @@ const addPastPaper = async (req, res) => {
     let imagesArray = [];
 
     for (let i = 0; i < req.files.length; i++) {
-      try {
-        const res = await uploadToCloudinary(req.files[i].path);
-        imagesArray.push(res.url);
-      } catch (e) {
-        throw new Error(e.message);
-      }
+        try {
+            const res = await uploadToCloudinary(req.files[i].path);
+            imagesArray.push(res.url);
+        } catch (e) {
+            throw new Error(e.message);
+        }
     }
 
     const newPastPaper = new PastPaper({
@@ -55,12 +55,18 @@ const updatePastPaper = async (req, res) => {
 }
 
 const deletePastPaper = async (req, res) => {
+    if (res.pastPaper.images.length !== 0) {
+        try {
+            res.pastPaper.images.forEach(async (element) => {
+                await fsPromises.unlink(element);
+            });
+        } catch (error) {
+            return res.status(error?.status || 500).json({ message: error?.message || error });
+        }
+    }
     try {
-        res.pastPaper.Images.forEach(async (element) => {
-            await fsPromises.unlink(element);
-        });
         await res.pastPaper.remove();
-        return res.status(204).json({ message: "Product deleted" });
+        return res.status(204).json({ message: "Past paper deleted" });
     }
     catch (error) {
         return res.status(error?.status || 500).json({ message: error?.message || error });

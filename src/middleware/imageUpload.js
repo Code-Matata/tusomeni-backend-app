@@ -15,31 +15,36 @@ const uploadToCloudinary = async (filePath) => {
     let mainFolderName = "tusomeniImages"
     let filePathOnCloudinary = `${mainFolderName}/${path.basename(filePath)}`
 
-    return cloudinary.uploader.upload(filePath, {"public_id": filePathOnCloudinary})
-    .then(res => {
-        fs.unlinkSync(filePath) // remove file from local upload folder
+    return cloudinary.uploader.upload(filePath, { "public_id": filePathOnCloudinary })
+        .then(res => {
+            fs.unlinkSync(filePath) // remove file from local upload folder
 
-        return {
-            message: "Success",
-            url: res.url
-        }
-    }).catch(err => {
-        fs.unlinkSync(filePath);
-        throw new Error("Failed to upload images")
-    })
+            return {
+                message: "Success",
+                url: res.url
+            }
+        }).catch(err => {
+            fs.unlinkSync(filePath);
+            throw new Error("Failed to upload images")
+        })
 
 }
 
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, './uploads')
+        cb(null, './uploads')
     },
     filename: function (req, file, cb) {
-      cb(null, file.originalname)
-    }
+        cb(
+            null,
+            `${Math.floor(
+                100000 + Math.random() * 900000
+            ).toString()}.${file.originalname.split(".").pop()}`
+        );
+    },
 })
 const uploadImages = multer({ storage: storage })
 
 
-module.exports = {uploadImages, uploadToCloudinary}
+module.exports = { uploadImages, uploadToCloudinary }
