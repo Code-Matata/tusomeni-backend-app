@@ -1,5 +1,6 @@
 const { uploadToCloudinary } = require('../middleware/imageUpload');
 const PastPaper = require('../models/PastPaper');
+const fs = require('fs');
 
 const fetchAllPapers = async (req, res) => {
     try {
@@ -50,15 +51,15 @@ const addPastPaper = async (req, res) => {
     }
 }
 
-const updatePastPaper = async (req, res) => {
+const updatePastPaper = async () => {
 
 }
 
 const deletePastPaper = async (req, res) => {
     if (res.pastPaper.images.length !== 0) {
         try {
-            res.pastPaper.images.forEach(async (element) => {
-                await fsPromises.unlink(element);
+            res.pastPaper.images.forEach((element) => {
+                fs.unlinkSync(element);
             });
         } catch (error) {
             return res.status(error?.status || 500).json({ message: error?.message || error });

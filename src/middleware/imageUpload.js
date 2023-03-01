@@ -25,7 +25,7 @@ const uploadToCloudinary = async (filePath) => {
             }
         }).catch(err => {
             fs.unlinkSync(filePath);
-            throw new Error("Failed to upload images")
+            throw new Error(`Failed to upload images, ${err.message}`)
         })
 
 }

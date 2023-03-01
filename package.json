@@ -6,7 +6,11 @@
     "start": "cross-env NODE_ENV=production env-cmd -f .env.prod nodemon src/app/index.js",
     "start:prod": "cross-env NODE_ENV=production env-cmd -f .env.prod nodemon src/app/index.js",
     "start:dev": "cross-env NODE_ENV=development env-cmd -f .env.dev nodemon src/app/index.js",
-    "dev": "cross-env NODE_ENV=development env-cmd -f .env.dev nodemon src/app/index.js"
+    "dev": "cross-env NODE_ENV=development env-cmd -f .env.dev nodemon src/app/index.js",
+    "format:check": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "lint:check": "eslint .",
+    "lint:fix": "eslint --fix ."
   },
   "keywords": [],
   "author": "Asahel-code",
@@ -24,6 +28,9 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "nodemon": "^2.0.20"
+    "eslint": "^8.35.0",
+    "eslint-config-prettier": "^8.6.0",
+    "nodemon": "^2.0.20",
+    "prettier": "^2.8.4"
   }
 }
