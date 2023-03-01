@@ -7,10 +7,10 @@
     "start:prod": "cross-env NODE_ENV=production env-cmd -f .env.prod nodemon src/app/index.js",
     "start:dev": "cross-env NODE_ENV=development env-cmd -f .env.dev nodemon src/app/index.js",
     "dev": "cross-env NODE_ENV=development env-cmd -f .env.dev nodemon src/app/index.js",
-    "format:check": "prettier --check \"**/*.{js,json,md}\"",
-    "format:fix": "prettier --write \"**/*.{js,json,md}\"",
-    "lint:check": "eslint \"**/*.{js,json,md}\"",
-    "lint:fix": "eslint --fix \"**/*.{js,json}\" "
+    "format:check": "prettier --check \"**/*.{js}\"",
+    "format:fix": "prettier --write \"**/*.{js}\"",
+    "lint:check": "eslint \"**/*.{js}\"",
+    "lint:fix": "eslint --fix \"**/*.{js}\" "
   },
   "keywords": [],
   "author": "Asahel-code",
