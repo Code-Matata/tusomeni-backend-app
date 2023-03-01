@@ -12,7 +12,7 @@ cloudinary.config({
 
 
 const uploadToCloudinary = async (filePath) => {
-    let mainFolderName = "tusomeniImages"
+    let mainFolderName = process.env.CLOUDINARY_FOLDER_NAME
     let filePathOnCloudinary = `${mainFolderName}/${path.basename(filePath)}`
 
     return cloudinary.uploader.upload(filePath, { "public_id": filePathOnCloudinary })
@@ -25,7 +25,7 @@ const uploadToCloudinary = async (filePath) => {
             }
         }).catch(err => {
             fs.unlinkSync(filePath);
-            throw new Error("Failed to upload images")
+            throw new Error(`Failed to upload images, ${err.message}`)
         })
 
 }

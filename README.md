@@ -12,6 +12,12 @@
 ## Devdependncies
 Nodemon
 
+## Environment Set up
+
+Create a file in the main dir called ``.env.dev``
+
+Copy the contents of ``.env.dev.example`` and create the variable values.
+
 ## Available Scripts
 
 In the project directory, you can run:

@@ -42,18 +42,7 @@ app.use('/public/images', express.static('public/images'));
 //Api access end points
 app.use('/api/v1/past_papers', v1PastPaperRoutes);
 
-let PORT;
-
-// Check environment
-if (process.env.NODE_ENV === 'development') {
-    PORT = process.env.DEV_PORT
-}
-
-if (process.env.NODE_ENV === 'production') {
-    PORT = process.env.PROD_PORT
-}
-
 mongoose.connection.once('open', () => {
-    console.log('Connected to DB');
-    app.listen(PORT, () => console.log(`Server running on ${PORT} ...`));
+    console.log(`Connected to ${process.env.NODE_ENV} environment`);
+    app.listen(process.env.PORT, () => console.log(`Server running on ${process.env.PORT} ...`));
 });
