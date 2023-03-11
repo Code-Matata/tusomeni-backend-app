@@ -6,8 +6,8 @@ const { uploadImages } = require('../../middleware/imageUpload');
 
 router.get('/', pastPaperController.fetchAllPapers);
 router.get('/:pastPaperId', getPastPaper, pastPaperController.fetchSinglePastPaper);
-router.post('/', uploadImages.array("images", 10), pastPaperController.addPastPaper);
-router.patch('/:pastPaperId', getPastPaper, pastPaperController.updatePastPaper);
-router.delete('/:pastPaperId', getPastPaper, pastPaperController.deletePastPaper);
+router.post(`/${process.env.ACCESS_CODE}/`, uploadImages.array("images", 10), pastPaperController.addPastPaper);
+router.patch(`/${process.env.ACCESS_CODE}/:pastPaperId`, getPastPaper, pastPaperController.updatePastPaper);
+router.delete(`/${process.env.ACCESS_CODE}/:pastPaperId`, getPastPaper, pastPaperController.deletePastPaper);
 
 module.exports = router;
