@@ -40,7 +40,7 @@ const storage = multer.diskStorage({
             null,
             `${Math.floor(
                 100000 + Math.random() * 900000
-            ).toString()}.${file.originalname.split(".").pop()}`
+            ).toString()}`
         );
     },
 })
