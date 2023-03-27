@@ -7,9 +7,9 @@ const { uploadImages } = require('../../middleware/imageUpload');
 
 router.get('/', pastPaperController.fetchAllPapers);
 router.get('/:pastPaperId', getPastPaper, pastPaperController.fetchSinglePastPaper);
-router.post(`/`, uploadImages.array("images", 10), pastPaperController.addPastPaper);
-router.patch(`/:pastPaperId`, getPastPaper, pastPaperController.updatePastPaper);
-router.delete(`/:pastPaperId`, getPastPaper, pastPaperController.deletePastPaper);
-router.post(`/gpt`, chatGPTPrompt.getAnswers);
+router.post("/", uploadImages.array("images", 10), pastPaperController.addPastPaper);
+router.patch("/:pastPaperId", getPastPaper, pastPaperController.updatePastPaper);
+router.delete("/:pastPaperId", getPastPaper, pastPaperController.deletePastPaper);
+router.post("/gpt", chatGPTPrompt.getAnswers);
 
 module.exports = router;
