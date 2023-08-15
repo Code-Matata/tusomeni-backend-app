@@ -4,7 +4,7 @@ const pastPaperController = require('../../controller/pastPaperController');
 const chatGPTPrompt = require('../../controller/chatGPTPrompt');
 const getPastPaper = require('../../middleware/getPastPaper');
 const { uploadImages } = require('../../middleware/imageUpload');
-const { mpesaTest } = require("../../controller/mpesaTest");
+const mpesaTest = require("../../controller/mpesaTest");
 
 router.get('/', pastPaperController.fetchAllPapers);
 router.get('/:pastPaperId', getPastPaper, pastPaperController.fetchSinglePastPaper);
