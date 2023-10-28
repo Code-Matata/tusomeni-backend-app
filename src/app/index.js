@@ -6,9 +6,10 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser")
 
 const connectDB = require('../config/dbConnection');
-const corsOptions = require('../config/corsOptions');
+// const corsOptions = require('../config/corsOptions');
 const checkOrigins = require('../middleware/checkOrigins');
 const v1PastPaperRoutes = require('../v1/routes/pastPaperRoutes');
+const { redisRateLimiter } = require('../middleware/rateLimiter');
 
 // Connect to MongoDB
 connectDB();
@@ -23,6 +24,8 @@ app.use(checkOrigins);
 
 // Cross Origin Resource Sharing
 app.use(cors({ origin: "*" }));
+
+app.use(redisRateLimiter)
 
 // middleware for json 
 app.use(express.json());
